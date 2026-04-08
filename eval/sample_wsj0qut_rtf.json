@@ -1,0 +1,602 @@
+{
+  "447o0302": {
+    "p_id": "447",
+    "utt_name": "447o0302",
+    "noisy_wav": "{noisy_root}/447o0302_CAR-WINUPB-2_-5.wav",
+    "clean_wav": "{clean_root}/447/447o0302.wav",
+    "length": 9.2985,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 18376331,
+    "snr": -5
+  },
+  "442c020p": {
+    "p_id": "442",
+    "utt_name": "442c020p",
+    "noisy_wav": "{noisy_root}/442c020p_STREET-KG-2_-5.wav",
+    "clean_wav": "{clean_root}/442/442c020p.wav",
+    "length": 8.903125,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 34326338,
+    "snr": -5
+  },
+  "440c020t": {
+    "p_id": "440",
+    "utt_name": "440c020t",
+    "noisy_wav": "{noisy_root}/440c020t_CAFE-CAFE-2_-5.wav",
+    "clean_wav": "{clean_root}/440/440c020t.wav",
+    "length": 4.868375,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 24783615,
+    "snr": -5
+  },
+  "445o030l": {
+    "p_id": "445",
+    "utt_name": "445o030l",
+    "noisy_wav": "{noisy_root}/445o030l_STREET-KG-2_-5.wav",
+    "clean_wav": "{clean_root}/445/445o030l.wav",
+    "length": 4.2765,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 19157997,
+    "snr": -5
+  },
+  "440o030d": {
+    "p_id": "440",
+    "utt_name": "440o030d",
+    "noisy_wav": "{noisy_root}/440o030d_STREET-KG-2_-5.wav",
+    "clean_wav": "{clean_root}/440/440o030d.wav",
+    "length": 14.054,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 19332408,
+    "snr": -5
+  },
+  "446o030h": {
+    "p_id": "446",
+    "utt_name": "446o030h",
+    "noisy_wav": "{noisy_root}/446o030h_HOME-LIVINGB-2_-5.wav",
+    "clean_wav": "{clean_root}/446/446o030h.wav",
+    "length": 11.691,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 6920440,
+    "snr": -5
+  },
+  "440o0312": {
+    "p_id": "440",
+    "utt_name": "440o0312",
+    "noisy_wav": "{noisy_root}/440o0312_CAR-WINUPB-2_-5.wav",
+    "clean_wav": "{clean_root}/440/440o0312.wav",
+    "length": 19.59825,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 31109647,
+    "snr": -5
+  },
+  "446o0306": {
+    "p_id": "446",
+    "utt_name": "446o0306",
+    "noisy_wav": "{noisy_root}/446o0306_HOME-LIVINGB-2_-5.wav",
+    "clean_wav": "{clean_root}/446/446o0306.wav",
+    "length": 11.315,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 20696516,
+    "snr": -5
+  },
+  "445c020q": {
+    "p_id": "445",
+    "utt_name": "445c020q",
+    "noisy_wav": "{noisy_root}/445c020q_CAFE-CAFE-2_-5.wav",
+    "clean_wav": "{clean_root}/445/445c020q.wav",
+    "length": 5.664875,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 36586845,
+    "snr": -5
+  },
+  "444o0307": {
+    "p_id": "444",
+    "utt_name": "444o0307",
+    "noisy_wav": "{noisy_root}/444o0307_CAFE-CAFE-2_-5.wav",
+    "clean_wav": "{clean_root}/444/444o0307.wav",
+    "length": 10.8529375,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 28650453,
+    "snr": -5
+  },
+  "447c020l": {
+    "p_id": "447",
+    "utt_name": "447c020l",
+    "noisy_wav": "{noisy_root}/447c020l_CAR-WINUPB-2_-5.wav",
+    "clean_wav": "{clean_root}/447/447c020l.wav",
+    "length": 8.080625,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 20113299,
+    "snr": -5
+  },
+  "440o030j": {
+    "p_id": "440",
+    "utt_name": "440o030j",
+    "noisy_wav": "{noisy_root}/440o030j_CAR-WINUPB-2_-5.wav",
+    "clean_wav": "{clean_root}/440/440o030j.wav",
+    "length": 6.0365,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 14103128,
+    "snr": -5
+  },
+  "443o0305": {
+    "p_id": "443",
+    "utt_name": "443o0305",
+    "noisy_wav": "{noisy_root}/443o0305_STREET-KG-2_-5.wav",
+    "clean_wav": "{clean_root}/443/443o0305.wav",
+    "length": 5.864,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 42201568,
+    "snr": -5
+  },
+  "445o030y": {
+    "p_id": "445",
+    "utt_name": "445o030y",
+    "noisy_wav": "{noisy_root}/445o030y_CAFE-CAFE-2_-5.wav",
+    "clean_wav": "{clean_root}/445/445o030y.wav",
+    "length": 14.3225,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 29386856,
+    "snr": -5
+  },
+  "445o030v": {
+    "p_id": "445",
+    "utt_name": "445o030v",
+    "noisy_wav": "{noisy_root}/445o030v_CAFE-CAFE-2_-5.wav",
+    "clean_wav": "{clean_root}/445/445o030v.wav",
+    "length": 8.2975625,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 7386100,
+    "snr": -5
+  },
+  "444o030w": {
+    "p_id": "444",
+    "utt_name": "444o030w",
+    "noisy_wav": "{noisy_root}/444o030w_STREET-KG-2_-5.wav",
+    "clean_wav": "{clean_root}/444/444o030w.wav",
+    "length": 8.7615625,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 34342107,
+    "snr": -5
+  },
+  "445c020b": {
+    "p_id": "445",
+    "utt_name": "445c020b",
+    "noisy_wav": "{noisy_root}/445c020b_CAFE-CAFE-2_-5.wav",
+    "clean_wav": "{clean_root}/445/445c020b.wav",
+    "length": 5.50875,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 32156177,
+    "snr": -5
+  },
+  "441c020g": {
+    "p_id": "441",
+    "utt_name": "441c020g",
+    "noisy_wav": "{noisy_root}/441c020g_STREET-KG-2_-5.wav",
+    "clean_wav": "{clean_root}/441/441c020g.wav",
+    "length": 5.6034375,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 15091163,
+    "snr": -5
+  },
+  "447o030l": {
+    "p_id": "447",
+    "utt_name": "447o030l",
+    "noisy_wav": "{noisy_root}/447o030l_CAR-WINUPB-2_-5.wav",
+    "clean_wav": "{clean_root}/447/447o030l.wav",
+    "length": 9.8535625,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 16547953,
+    "snr": -5
+  },
+  "446c020e": {
+    "p_id": "446",
+    "utt_name": "446c020e",
+    "noisy_wav": "{noisy_root}/446c020e_CAFE-CAFE-2_-5.wav",
+    "clean_wav": "{clean_root}/446/446c020e.wav",
+    "length": 10.954125,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 9189876,
+    "snr": -5
+  },
+  "444o030f": {
+    "p_id": "444",
+    "utt_name": "444o030f",
+    "noisy_wav": "{noisy_root}/444o030f_CAR-WINUPB-2_0.wav",
+    "clean_wav": "{clean_root}/444/444o030f.wav",
+    "length": 6.1341875,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 12630252,
+    "snr": 0
+  },
+  "441c020k": {
+    "p_id": "441",
+    "utt_name": "441c020k",
+    "noisy_wav": "{noisy_root}/441c020k_CAR-WINUPB-2_0.wav",
+    "clean_wav": "{clean_root}/441/441c020k.wav",
+    "length": 10.5486875,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 21604923,
+    "snr": 0
+  },
+  "447c0214": {
+    "p_id": "447",
+    "utt_name": "447c0214",
+    "noisy_wav": "{noisy_root}/447c0214_HOME-LIVINGB-2_0.wav",
+    "clean_wav": "{clean_root}/447/447c0214.wav",
+    "length": 2.9835,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 16078399,
+    "snr": 0
+  },
+  "440c020b": {
+    "p_id": "440",
+    "utt_name": "440c020b",
+    "noisy_wav": "{noisy_root}/440c020b_CAR-WINUPB-2_0.wav",
+    "clean_wav": "{clean_root}/440/440c020b.wav",
+    "length": 12.0475,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 8644157,
+    "snr": 0
+  },
+  "446c0207": {
+    "p_id": "446",
+    "utt_name": "446c0207",
+    "noisy_wav": "{noisy_root}/446c0207_STREET-KG-2_0.wav",
+    "clean_wav": "{clean_root}/446/446c0207.wav",
+    "length": 4.5505,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 33806425,
+    "snr": 0
+  },
+  "447c0215": {
+    "p_id": "447",
+    "utt_name": "447c0215",
+    "noisy_wav": "{noisy_root}/447c0215_CAR-WINUPB-2_0.wav",
+    "clean_wav": "{clean_root}/447/447c0215.wav",
+    "length": 11.3606875,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 32096367,
+    "snr": 0
+  },
+  "443c020f": {
+    "p_id": "443",
+    "utt_name": "443c020f",
+    "noisy_wav": "{noisy_root}/443c020f_CAFE-CAFE-2_0.wav",
+    "clean_wav": "{clean_root}/443/443c020f.wav",
+    "length": 7.98,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 33808737,
+    "snr": 0
+  },
+  "446o0307": {
+    "p_id": "446",
+    "utt_name": "446o0307",
+    "noisy_wav": "{noisy_root}/446o0307_CAFE-CAFE-2_0.wav",
+    "clean_wav": "{clean_root}/446/446o0307.wav",
+    "length": 7.1531875,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 5598577,
+    "snr": 0
+  },
+  "442o0302": {
+    "p_id": "442",
+    "utt_name": "442o0302",
+    "noisy_wav": "{noisy_root}/442o0302_HOME-LIVINGB-2_0.wav",
+    "clean_wav": "{clean_root}/442/442o0302.wav",
+    "length": 6.1801875,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 38257778,
+    "snr": 0
+  },
+  "442o030f": {
+    "p_id": "442",
+    "utt_name": "442o030f",
+    "noisy_wav": "{noisy_root}/442o030f_CAR-WINUPB-2_0.wav",
+    "clean_wav": "{clean_root}/442/442o030f.wav",
+    "length": 8.483125,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 32323909,
+    "snr": 0
+  },
+  "443o0309": {
+    "p_id": "443",
+    "utt_name": "443o0309",
+    "noisy_wav": "{noisy_root}/443o0309_CAFE-CAFE-2_0.wav",
+    "clean_wav": "{clean_root}/443/443o0309.wav",
+    "length": 12.8304375,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 17481316,
+    "snr": 0
+  },
+  "441o0306": {
+    "p_id": "441",
+    "utt_name": "441o0306",
+    "noisy_wav": "{noisy_root}/441o0306_STREET-KG-2_0.wav",
+    "clean_wav": "{clean_root}/441/441o0306.wav",
+    "length": 9.4905625,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 35113436,
+    "snr": 0
+  },
+  "442o030j": {
+    "p_id": "442",
+    "utt_name": "442o030j",
+    "noisy_wav": "{noisy_root}/442o030j_HOME-LIVINGB-2_0.wav",
+    "clean_wav": "{clean_root}/442/442o030j.wav",
+    "length": 9.227375,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 29755280,
+    "snr": 0
+  },
+  "444c0211": {
+    "p_id": "444",
+    "utt_name": "444c0211",
+    "noisy_wav": "{noisy_root}/444c0211_STREET-KG-2_0.wav",
+    "clean_wav": "{clean_root}/444/444c0211.wav",
+    "length": 11.00725,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 22338059,
+    "snr": 0
+  },
+  "447c020c": {
+    "p_id": "447",
+    "utt_name": "447c020c",
+    "noisy_wav": "{noisy_root}/447c020c_CAFE-CAFE-2_0.wav",
+    "clean_wav": "{clean_root}/447/447c020c.wav",
+    "length": 10.1095625,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 21846163,
+    "snr": 0
+  },
+  "442c0203": {
+    "p_id": "442",
+    "utt_name": "442c0203",
+    "noisy_wav": "{noisy_root}/442c0203_STREET-KG-2_0.wav",
+    "clean_wav": "{clean_root}/442/442c0203.wav",
+    "length": 6.442625,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 5131618,
+    "snr": 0
+  },
+  "447o030t": {
+    "p_id": "447",
+    "utt_name": "447o030t",
+    "noisy_wav": "{noisy_root}/447o030t_HOME-LIVINGB-2_0.wav",
+    "clean_wav": "{clean_root}/447/447o030t.wav",
+    "length": 8.3358125,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 37842776,
+    "snr": 0
+  },
+  "444o030z": {
+    "p_id": "444",
+    "utt_name": "444o030z",
+    "noisy_wav": "{noisy_root}/444o030z_HOME-LIVINGB-2_0.wav",
+    "clean_wav": "{clean_root}/444/444o030z.wav",
+    "length": 12.6451875,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 17341633,
+    "snr": 0
+  },
+  "443c0206": {
+    "p_id": "443",
+    "utt_name": "443c0206",
+    "noisy_wav": "{noisy_root}/443c0206_CAR-WINUPB-2_0.wav",
+    "clean_wav": "{clean_root}/443/443c0206.wav",
+    "length": 7.15425,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 23573304,
+    "snr": 0
+  },
+  "440c0201": {
+    "p_id": "440",
+    "utt_name": "440c0201",
+    "noisy_wav": "{noisy_root}/440c0201_CAFE-CAFE-2_0.wav",
+    "clean_wav": "{clean_root}/440/440c0201.wav",
+    "length": 5.725,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 2295104,
+    "snr": 0
+  },
+  "443c020x": {
+    "p_id": "443",
+    "utt_name": "443c020x",
+    "noisy_wav": "{noisy_root}/443c020x_HOME-LIVINGB-2_5.wav",
+    "clean_wav": "{clean_root}/443/443c020x.wav",
+    "length": 9.862,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 1975603,
+    "snr": 5
+  },
+  "442o030m": {
+    "p_id": "442",
+    "utt_name": "442o030m",
+    "noisy_wav": "{noisy_root}/442o030m_HOME-LIVINGB-2_5.wav",
+    "clean_wav": "{clean_root}/442/442o030m.wav",
+    "length": 6.821375,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 22267978,
+    "snr": 5
+  },
+  "446c020d": {
+    "p_id": "446",
+    "utt_name": "446c020d",
+    "noisy_wav": "{noisy_root}/446c020d_CAFE-CAFE-2_5.wav",
+    "clean_wav": "{clean_root}/446/446c020d.wav",
+    "length": 6.49725,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 5894792,
+    "snr": 5
+  },
+  "444c0214": {
+    "p_id": "444",
+    "utt_name": "444c0214",
+    "noisy_wav": "{noisy_root}/444c0214_CAFE-CAFE-2_5.wav",
+    "clean_wav": "{clean_root}/444/444c0214.wav",
+    "length": 8.2463125,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 21767413,
+    "snr": 5
+  },
+  "445c0213": {
+    "p_id": "445",
+    "utt_name": "445c0213",
+    "noisy_wav": "{noisy_root}/445c0213_CAFE-CAFE-2_5.wav",
+    "clean_wav": "{clean_root}/445/445c0213.wav",
+    "length": 3.095125,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 22116515,
+    "snr": 5
+  },
+  "444o0303": {
+    "p_id": "444",
+    "utt_name": "444o0303",
+    "noisy_wav": "{noisy_root}/444o0303_STREET-KG-2_5.wav",
+    "clean_wav": "{clean_root}/444/444o0303.wav",
+    "length": 10.286875,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 40107933,
+    "snr": 5
+  },
+  "441c0202": {
+    "p_id": "441",
+    "utt_name": "441c0202",
+    "noisy_wav": "{noisy_root}/441c0202_STREET-KG-2_5.wav",
+    "clean_wav": "{clean_root}/441/441c0202.wav",
+    "length": 6.3463125,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 18368947,
+    "snr": 5
+  },
+  "441c020u": {
+    "p_id": "441",
+    "utt_name": "441c020u",
+    "noisy_wav": "{noisy_root}/441c020u_CAR-WINUPB-2_5.wav",
+    "clean_wav": "{clean_root}/441/441c020u.wav",
+    "length": 2.8350625,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 11647911,
+    "snr": 5
+  },
+  "447o030a": {
+    "p_id": "447",
+    "utt_name": "447o030a",
+    "noisy_wav": "{noisy_root}/447o030a_CAR-WINUPB-2_5.wav",
+    "clean_wav": "{clean_root}/447/447o030a.wav",
+    "length": 14.731125,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 25911633,
+    "snr": 5
+  },
+  "442c0210": {
+    "p_id": "442",
+    "utt_name": "442c0210",
+    "noisy_wav": "{noisy_root}/442c0210_CAFE-CAFE-2_5.wav",
+    "clean_wav": "{clean_root}/442/442c0210.wav",
+    "length": 3.461125,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 26028487,
+    "snr": 5
+  },
+  "440c020o": {
+    "p_id": "440",
+    "utt_name": "440c020o",
+    "noisy_wav": "{noisy_root}/440c020o_STREET-KG-2_5.wav",
+    "clean_wav": "{clean_root}/440/440c020o.wav",
+    "length": 9.1990625,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 31250990,
+    "snr": 5
+  },
+  "447o030r": {
+    "p_id": "447",
+    "utt_name": "447o030r",
+    "noisy_wav": "{noisy_root}/447o030r_CAFE-CAFE-2_5.wav",
+    "clean_wav": "{clean_root}/447/447o030r.wav",
+    "length": 12.574125,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 33020696,
+    "snr": 5
+  },
+  "447c0204": {
+    "p_id": "447",
+    "utt_name": "447c0204",
+    "noisy_wav": "{noisy_root}/447c0204_HOME-LIVINGB-2_5.wav",
+    "clean_wav": "{clean_root}/447/447c0204.wav",
+    "length": 10.041625,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 32889888,
+    "snr": 5
+  },
+  "444c020b": {
+    "p_id": "444",
+    "utt_name": "444c020b",
+    "noisy_wav": "{noisy_root}/444c020b_CAFE-CAFE-2_5.wav",
+    "clean_wav": "{clean_root}/444/444c020b.wav",
+    "length": 9.8953125,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 22994453,
+    "snr": 5
+  },
+  "440c0211": {
+    "p_id": "440",
+    "utt_name": "440c0211",
+    "noisy_wav": "{noisy_root}/440c0211_HOME-LIVINGB-2_5.wav",
+    "clean_wav": "{clean_root}/440/440c0211.wav",
+    "length": 6.0506875,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 8624932,
+    "snr": 5
+  },
+  "446o030w": {
+    "p_id": "446",
+    "utt_name": "446o030w",
+    "noisy_wav": "{noisy_root}/446o030w_STREET-KG-2_5.wav",
+    "clean_wav": "{clean_root}/446/446o030w.wav",
+    "length": 6.72025,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 21781582,
+    "snr": 5
+  },
+  "443c0204": {
+    "p_id": "443",
+    "utt_name": "443c0204",
+    "noisy_wav": "{noisy_root}/443c0204_CAFE-CAFE-2_5.wav",
+    "clean_wav": "{clean_root}/443/443c0204.wav",
+    "length": 10.2309375,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 10342637,
+    "snr": 5
+  },
+  "446c020r": {
+    "p_id": "446",
+    "utt_name": "446c020r",
+    "noisy_wav": "{noisy_root}/446c020r_CAR-WINUPB-2_5.wav",
+    "clean_wav": "{clean_root}/446/446c020r.wav",
+    "length": 8.461625,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 10483498,
+    "snr": 5
+  },
+  "447o0307": {
+    "p_id": "447",
+    "utt_name": "447o0307",
+    "noisy_wav": "{noisy_root}/447o0307_HOME-LIVINGB-2_5.wav",
+    "clean_wav": "{clean_root}/447/447o0307.wav",
+    "length": 4.2646875,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 13430728,
+    "snr": 5
+  },
+  "443o0307": {
+    "p_id": "443",
+    "utt_name": "443o0307",
+    "noisy_wav": "{noisy_root}/443o0307_CAFE-CAFE-2_5.wav",
+    "clean_wav": "{clean_root}/443/443o0307.wav",
+    "length": 4.541,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 29142557,
+    "snr": 5
+  }
+}
