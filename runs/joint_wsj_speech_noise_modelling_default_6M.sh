@@ -19,5 +19,5 @@ python train.py \
   --video_feature_type resnet \
   --backbone jointncsnpp6M \
   --audio_only \
-  --joint_noise_clean_speech_training \
+  --initial_joint_noise_clean_speech_training \
   --run_id wsj_speech_noise_modelling_default_6M

@@ -17,5 +17,5 @@ python train.py --base_dir /group_storage/source_separation/VoiceBankDEMAND/trai
   --vfeat_processing_order default \
   --backbone jointncsnpp6M \
   --audio_only \
-  --joint_noise_clean_speech_training \
+  --initial_joint_noise_clean_speech_training \
   --run_id vb_speech_noise_modelling_default_6M

@@ -63,11 +63,11 @@ python train.py \
   --video_feature_type resnet \
   --backbone jointncsnpp6M \
   --audio_only \
-  --joint_noise_clean_speech_training \
+  --initial_joint_noise_clean_speech_training \
   --run_id name_of_your_model
 ```
 
-Following the [fast_UdiffSE](https://github.com/jeaneudesAyilo/fast_UdiffSE/) repository, audio-visual model can be trained as follows: 
+Following the [fast_UdiffSE](https://github.com/jeaneudesAyilo/fast_UdiffSE/) repository, audio-visual model can be trained as follows (note that setting up the environment of this repo is normally enough to work with the [fast_UdiffSE](https://github.com/jeaneudesAyilo/fast_UdiffSE/) repo): 
 
 ```bash
 python train.py \
@@ -83,6 +83,8 @@ python train.py \
 	--fusion_level enc_dec \
 	--run_id name_of_your_model
 ```
+
+Please, see more runs in [runs directory](./runs/).
 
 
 ## Pretrained checkpoints
@@ -122,6 +124,8 @@ bash ./eval/statistics/run_metrics.sh
 
 *Note that you would need to insert the parts to your data in some of the files involved in the evaluation and metrics computation.*
 
+## Demo
+We show in this [demo notebook](./demo.ipynb) a quick way to use the provided checkpoints and run the different algorithms.
 
 ## TODO
 
