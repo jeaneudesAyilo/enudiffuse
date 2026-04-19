@@ -56,10 +56,11 @@ class JointParaDiffUSEEN:
 
         self.scheduler = LinearScheduler(N=num_E, eps=eps)
         
-        # ==== For prior speech model ====        
+        # ==== For joint prior speech noise model ====        
         self.sde = OUVESDE(theta=1.5, sigma_min=0.05, sigma_max=0.5, N=num_E)
 
-        
+        ### if using a checkpoint trained with code like the one present in this repo and which implements the backbones jointncsnpp; then use the following lines 
+       
         self.model = ScoreModel.load_from_checkpoint(
             ckpt_path, base_dir="", batch_size=1, num_workers=0, kwargs=dict(gpu=False)
         )
@@ -73,6 +74,36 @@ class JointParaDiffUSEEN:
         )
         self.model_cpu.data_module.transform_type = transform_type
 
+
+        ### if using a checkpoint trained with a code different than the one present in this repo and which implements 
+        ### the backbones jointncsnpp... but don't name it as that (neural network archicture is however the same); then use the following lines. 
+		### if using the demo notebook with the provided checkpoints or a checkpoint trained with backbone jointncsnpp-like present in this repo,
+		### please do not uncomment these following lines, it is already taken into account in the notebook.
+		### uncomment for example when using the provided checkpoint to run the inference on the full test set. 
+
+
+		###start
+
+        # self.model = ScoreModel.load_from_checkpoint(ckpt_path,joint_noise_clean_speech_training=True,                                                            
+        # base_dir="", batch_size=1, num_workers=0, kwargs=dict(gpu=False), backbone="jointncsnpp6M")
+        # self.model.data_module.transform_type = "exponent"
+        # self.model.eval(no_ema=False)
+        # self.model.to("cuda")
+        # self.model_cpu = ScoreModel.load_from_checkpoint(ckpt_path,joint_noise_clean_speech_training=True,
+        # base_dir="", batch_size=1, num_workers=0, kwargs=dict(gpu=False), backbone="jointncsnpp6M") ## not necessarly required
+
+
+        # self.model = ScoreModel.load_from_checkpoint(ckpt_path, joint_noise_clean_speech_training=True,
+        # base_dir="", batch_size=1, num_workers=0, kwargs=dict(gpu=False), backbone="jointncsnpp6M")
+        # self.model.data_module.transform_type = "exponent"
+        # self.model.eval(no_ema=False)
+        # self.model.to("cuda")
+        # self.model_cpu = ScoreModel.load_from_checkpoint(ckpt_path, joint_noise_clean_speech_training=True,
+        # base_dir="", batch_size=1, num_workers=0, kwargs=dict(gpu=False), backbone="jointncsnpp6M") ## not necessarly required
+		
+        ###end
+
+
         self.audio_only = self.model.audio_only
         if not self.audio_only : 
             from sgmse.util.utils_video import load_array,resample_video, prep_video, videocap
@@ -84,18 +115,6 @@ class JointParaDiffUSEEN:
         else: 
             self.vfeat_processing_order = "default"  
         
-        # # ==== For prior noise model ====        
-        # self.sde_noise = OUVESDE(theta=1.5, sigma_min=0.05, sigma_max=0.5, N=num_E)
-        # # self.sde_noise = OUVPSDE(beta_min=1e-4, beta_max=0.02)
-        # self.model_noise = ScoreModel.load_from_checkpoint(
-        #     ckpt_noise, base_dir="", batch_size=1, num_workers=0, kwargs=dict(gpu=False)
-        # )
-
-        # # self.sde_noise = self.model_noise.sde
-
-        # self.model_noise.data_module.transform_type = transform_type
-        # self.model_noise.eval(no_ema=False)
-        # self.model_noise.to(self.device)
 
         self.print_metrics = print_metrics
 
