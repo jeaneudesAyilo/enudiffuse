@@ -90,14 +90,6 @@ class JointParaDiffUSEENPureOracle:
         # self.model.to("cuda")
         # self.model_cpu = ScoreModel.load_from_checkpoint(ckpt_path,joint_noise_clean_speech_training=True,
         # base_dir="", batch_size=1, num_workers=0, kwargs=dict(gpu=False), backbone="jointncsnpp6M") ## not necessarly required
-
-        # self.model = ScoreModel.load_from_checkpoint(ckpt_path, joint_noise_clean_speech_training=True,
-        # base_dir="", batch_size=1, num_workers=0, kwargs=dict(gpu=False), backbone="jointncsnpp6M")
-        # self.model.data_module.transform_type = "exponent"
-        # self.model.eval(no_ema=False)
-        # self.model.to("cuda")
-        # self.model_cpu = ScoreModel.load_from_checkpoint(ckpt_path, joint_noise_clean_speech_training=True,
-        # base_dir="", batch_size=1, num_workers=0, kwargs=dict(gpu=False), backbone="jointncsnpp6M") ## not necessarly required
 		
 		### end
 
