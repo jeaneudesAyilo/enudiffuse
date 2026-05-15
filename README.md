@@ -4,6 +4,15 @@ This repository contains the official Pytorch implementation of the papers:
 - [Diffusion-based Frameworks for Unsupervised Speech Enhancement](https://arxiv.org/abs/2601.09931) and 
 - [Posterior Transition Modeling for Unsupervised Diffusion-Based Speech Enhancement](https://ieeexplore.ieee.org/document/11053679/). 
 
+## Supplemental material
+
+Please, find bellow the supplementary materials associated to the first mentionned paper above:
+
+[Supplementary materials](./supplementary_materials/Supp_materials.pdf)
+
+
+## Demo with listening audio samples
+
 
 
 ## Environment setup
@@ -124,7 +133,7 @@ bash ./eval/statistics/run_metrics.sh
 
 *Note that you would need to insert the parts to your data in some of the files involved in the evaluation and metrics computation.*
 
-## Demo
+## Demo for quick usage
 We show in this [demo notebook](./demo.ipynb) a quick way to use the provided checkpoints and run the different algorithms.
 
 ## TODO
