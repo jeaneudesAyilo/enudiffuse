@@ -4,7 +4,7 @@ This repository contains the official Pytorch implementation of the papers:
 - [Diffusion-based Frameworks for Unsupervised Speech Enhancement](https://arxiv.org/abs/2601.09931) and 
 - [Posterior Transition Modeling for Unsupervised Diffusion-Based Speech Enhancement](https://ieeexplore.ieee.org/document/11053679/). 
 
-## Supplemental material
+## Supplementary materials
 
 Please, find bellow the supplementary materials associated to the first mentionned paper above:
 
