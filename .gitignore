@@ -122,6 +122,7 @@ pretrained_weights/*
 
 # Data
 logs/*
+demo_samples/*
 !data/.keep
 
 
@@ -135,4 +136,7 @@ OAR.*
 parrot.pkl
 wandb/*
 
+# demo webpage
+
+demo_samples/*.ipynb
 

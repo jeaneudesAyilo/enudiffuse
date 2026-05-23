@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta name="google-site-verification" content="ftFOlJETX-2KNjaPh8W6s8lhigItRuu9fOmjHZZ0nY0"> -->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title> Diffusion-based Frameworks for Unsupervised Speech Enhancement</title> 
+
+    <!-- <title>AV-fast_UdiffSE</title> -->
+    <style type="text/css">
+        
+        table {
+            width: 159%;
+            border-collapse: collapse;
+            margin: 17px 0;
+            table-layout: fixed;
+        }
+
+        th, td {
+            border: 3px solid #dddddd;
+            text-align: center;
+            padding: 5px;
+        }
+
+        td {
+        text-align: center;
+        vertical-align: middle;
+        }        
+
+        /* First column width */
+        thead > tr > th:first-child,
+        tbody > tr > td:first-child {
+            width: 180px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        audio {
+            width: 120%;
+        }
+        
+      
+        @media (max-width: 650px) {
+            .big-screen {
+                display: none;
+            }
+        }
+        
+        @media (min-width: 650px) {
+            .small-screen {
+                display: none;
+            }
+        }
+        .container{
+            margin-left: 0cm;
+        }
+
+        /* BUTTON */
+        .audio-btn {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: none;
+        background: black;
+        cursor: pointer;
+
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin: auto; /* centers inside table cell */
+        }        
+
+        .audio-btn:hover {
+            transform: scale(1.05);
+        }
+
+
+        /* PLAY ICON */
+        .audio-btn.play::before {
+            content: "";
+
+            width: 0;
+            height: 0;
+
+            border-left: 7px solid white;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+
+            margin-left: 1px; /* tiny optical correction */
+        }
+
+        /* PAUSE ICON */
+        .audio-btn.pause::before,
+        .audio-btn.pause::after {
+        content: "";
+        position: absolute;
+
+        width: 3px;
+        height: 9px;
+
+        background: white;
+
+        top: 50%;
+        transform: translateY(-50%);
+        }
+
+        .audio-btn.pause::before {
+        left: 7px;
+        }
+
+        .audio-btn.pause::after {
+        right: 7px;
+        }
+
+
+        /* LOADING SPINNER */
+        .audio-btn.loading::before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 5px;
+
+            width: 9px;
+            height: 9px;
+
+            border: 2px solid white;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+
+            animation: spin 0.8s linear infinite;
+        }
+
+
+    @keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+    }
+
+    </style>
+</head>
+
+<body>
+
+
+ <header class="header">
+    <div class="jumbotron bg-dark text-center">
+        <!-- <div class="container "> -->
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <h2><a class="text-light">
+                        Diffusion-based Frameworks for Unsupervised Speech Enhancement </a></h2>
+                    <p>
+                    </p>
+                    <p>
+                    </p>
+                    <div class="row">                                                 
+                        <div class="col-md col-sm-12">
+                            <a class="text-light" href="#">Jean-Eudes Ayilo<sup>1</sup>, </a>
+                            <a class="text-light" href="#">Mostafa Sadeghi<sup>1</sup>, </a>
+                            <a class="text-light" href="#">Romain Serizel<sup>1</sup>, </a>
+                            <a class="text-light" href="#">Xavier Alameda-Pineda <sup>2</sup> </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-md col-sm-12"><a class="text-light" href="#">1.
+                            Université de Lorraine, CNRS, Inria, Loria, Nancy, France</a>
+                        </div>
+                        <div class="col-md col-sm-12"><a class="text-light" href="#">2.
+                            Université Grenoble Alpes, Inria, Grenoble, France</a>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row" id="ref">
+                        <div class="col">
+                            <!-- <hr> -->            
+
+                             <div class="col-sm-12" style="padding-left: 0px">
+                                <h4 style="color:white; margin-top: 20px; text-align: center;">
+                                    Material
+                                  </h4>
+                                <!--<h4 style="color:white"; margin-top: 50px;> <center> Material </center> </h4> -->
+
+                                <!--<a class="text-light" style="margin-right: 10px;">
+                                    <font size="7">Material</font>
+                                </a> -->
+
+                                <a class="text-light" href="https://arxiv.org/abs/2601.09931" style="margin-right: 10px;">
+                                    <font size="4">[Preprint]</font>
+                                </a>
+            
+                                <!-- <a class="text-dark" href="./bib.txt" style="margin-right: 10px;">
+                                    <font size="4">[Bibtex]</font>
+                                </a>  -->
+            
+                                <a class="text-light" href="https://github.com/jeaneudesAyilo/enudiffuse/tree/main" style="margin-right: 10px;">
+                                    <font size="4">[Code]</font>
+                                </a>
+                                
+                                <!--<a class="text-dark" href="" style="margin-right: 10px;">
+                                    <font size="4">[AFRCNN for Speech Enhancement Task]</font> 
+                                </a> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <p></p>
+                <div class="row">
+                </div>
+                <p></p>
+
+            </div>
+        <!--</div> -->
+    </div>
+
+</header> 
+
+
+<strong>Abstract.</strong>
+
+This paper addresses unsupervised diffusion-based single-
+channel speech enhancement (SE). Prior work in this direction com-
+bines a score-based diffusion model trained on clean speech with a
+Gaussian noise model whose covariance is structured by non-negative
+matrix factorization (NMF). This combination is used within an
+iterative expectation–maximization (EM) scheme, in which a diffusion-
+based posterior-sampling E-step estimates the clean speech. We first
+revisit this framework and propose to explicitly model both speech and
+acoustic noise as latent variables, jointly sampling them in the E-step
+instead of sampling speech alone as in previous approaches. We then
+introduce a new semi-supervised SE framework that replaces the NMF
+noise prior with a diffusion-based noise model, learned jointly with the
+speech prior in a single conditional score model. Within this framework,
+we derive two variants: one that implicitly accounts for noise and one
+that explicitly treats noise as a latent variable. Experiments on WSJ0–
+QUT and VoiceBank–DEMAND show that explicit noise modeling
+systematically improves SE performance for both NMF-based and
+diffusion-based noise priors. Under matched conditions, the diffusion-
+based noise model attains the best overall quality and intelligibility
+among unsupervised methods, while under mismatched conditions the
+proposed NMF-based explicit-noise framework is more robust and
+suffers less degradation than several supervised baselines. Code, demo,
+and supplementary materials are publicly available.
+</p>
+
+<div class="container">
+
+<!-- ========================================================== -->
+<!-- WSJ-QUT -->
+<!-- ========================================================== -->
+
+<h4>WSJ-QUT</h4>
+
+<!-- ================= MATCHED WSJ0-QUT================= -->
+
+<h6><b>Matched Conditions</b></h6>
+
+<table>
+
+<thead>
+<tr>
+
+<th>id-file_noise-type_snr</th> 
+
+<th>Clean</th>
+
+<th>Noisy</th>
+
+<th>SGMSE+ [1]</th>
+
+<th>Conv-TasNet [2]</th>
+
+<th>RemixIT [3]</th>
+
+<th>RVAE [4]</th>
+
+<th>UDiffSE [5]</th>
+
+<th>UDiffSE+ [6]</th>
+
+<th>DEPSE-IL [7]</th>
+
+<th>DEPSE-TL [7]</th>
+
+<th>DiffUSEEN</th>
+
+<th>ParaDiffUSE-IN</th>
+
+<th>ParaDiffUSE-EN</th>
+
+</tr>
+</thead>
+
+<tbody>
+    <tr>
+    <td>441c020h_CAFE-CAFE-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/441c020h_CAFE-CAFE-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>447c020r_CAR-WINUPB-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020r_CAR-WINUPB-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>445o030d_HOME-LIVINGB-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/445o030d_HOME-LIVINGB-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>442o030d_STREET-KG-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030d_STREET-KG-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>447c020v_CAFE-CAFE-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020v_CAFE-CAFE-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>440o030j_CAR-WINUPB-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030j_CAR-WINUPB-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>447c020a_STREET-KG-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020a_STREET-KG-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>447c020z_HOME-LIVINGB-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447c020z_HOME-LIVINGB-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>443c020l_HOME-LIVINGB-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>446o030t_CAFE-CAFE-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/446o030t_CAFE-CAFE-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>447o0303_HOME-LIVINGB-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>440c020t_CAFE-CAFE-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020t_CAFE-CAFE-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>442o030q_CAR-WINUPB-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/442o030q_CAR-WINUPB-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>440c020a_STREET-KG-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c020a_STREET-KG-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>440o030a_STREET-KG-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440o030a_STREET-KG-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>440c0207_CAR-WINUPB-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_wsj0qut/440c0207_CAR-WINUPB-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+</tbody>
+
+</table>
+
+<!-- ================= MISMATCHED WSJ0QUT ================= -->
+
+<h6><b>Mismatched Conditions</b></h6>
+
+<table>
+
+<thead>
+<tr>
+
+<th>id-file_noise-type_snr</th>
+
+<th>Clean</th>
+
+<th>Noisy</th>
+
+<th>SGMSE+ [1]</th>
+
+<th>Conv-TasNet [2]</th>
+
+<th>RemixIT [3]</th>
+
+<th>RVAE [4]</th>
+
+<th>UDiffSE [5]</th>
+
+<th>UDiffSE+ [6]</th>
+
+<th>DEPSE-IL [7]</th>
+
+<th>DEPSE-TL [7]</th>
+
+<th>DiffUSEEN</th>
+
+<th>ParaDiffUSE-IN</th>
+
+<th>ParaDiffUSE-EN</th>
+
+</tr>
+</thead>
+
+<tbody>
+    <tr>
+    <td>441c020h_CAFE-CAFE-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/441c020h_CAFE-CAFE-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>447c020r_CAR-WINUPB-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020r_CAR-WINUPB-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>445o030d_HOME-LIVINGB-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/445o030d_HOME-LIVINGB-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>442o030d_STREET-KG-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030d_STREET-KG-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>447c020v_CAFE-CAFE-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020v_CAFE-CAFE-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>440o030j_CAR-WINUPB-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030j_CAR-WINUPB-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>447c020a_STREET-KG-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020a_STREET-KG-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>447c020z_HOME-LIVINGB-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447c020z_HOME-LIVINGB-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>443c020l_HOME-LIVINGB-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/443c020l_HOME-LIVINGB-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>446o030t_CAFE-CAFE-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/446o030t_CAFE-CAFE-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>447o0303_HOME-LIVINGB-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/447o0303_HOME-LIVINGB-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>440c020t_CAFE-CAFE-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020t_CAFE-CAFE-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>442o030q_CAR-WINUPB-2_0</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/442o030q_CAR-WINUPB-2_0/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>440c020a_STREET-KG-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c020a_STREET-KG-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>440o030a_STREET-KG-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440o030a_STREET-KG-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>440c0207_CAR-WINUPB-2_-5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_wsj0qut/440c0207_CAR-WINUPB-2_-5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+</tbody>
+
+</table>
+
+<!-- ========================================================== -->
+<!-- VB-DMD -->
+<!-- ========================================================== -->
+
+<h4>VB-DMD</h4>
+
+<!-- ================= MATCHED VB-DMD================= -->
+
+<h6><b>Matched Conditions</b></h6>
+
+<table>
+
+<thead>
+<tr>
+
+<th>id-file_noise-type_snr</th>
+
+<th>Clean</th>
+
+<th>Noisy</th>
+
+<th>SGMSE+ [1]</th>
+
+<th>Conv-TasNet [2]</th>
+
+<th>RemixIT [3]</th>
+
+<th>RVAE [4]</th>
+
+<th>UDiffSE [5]</th>
+
+<th>UDiffSE+ [6]</th>
+
+<th>DEPSE-IL [7]</th>
+
+<th>DEPSE-TL [7]</th>
+
+<th>DiffUSEEN</th>
+
+<th>ParaDiffUSE-IN</th>
+
+<th>ParaDiffUSE-EN</th>
+
+</tr>
+</thead>
+
+<tbody>
+    <tr>
+    <td>p232_279_bus_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_279_bus_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_234_psquare_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_234_psquare_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_291_cafe_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_291_cafe_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_378_office_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_378_office_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_074_living_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_074_living_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_085_bus_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_085_bus_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_175_living_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_175_living_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_106_bus_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_106_bus_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_154_cafe_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_154_cafe_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_214_living_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_214_living_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_072_cafe_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_072_cafe_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_087_bus_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_087_bus_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_103_psquare_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_103_psquare_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_312_office_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_312_office_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_211_psquare_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p232_211_psquare_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_058_office_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/matched_vbdmd/p257_058_office_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+</tbody>
+
+</table>
+
+
+<!-- ================= MISMATCHED VB-DMD ================= -->
+
+<h6><b>Mismatched Conditions</b></h6>
+
+<table>
+
+<thead>
+<tr>
+
+<th>id-file_noise-type_snr</th>
+
+<th>Clean</th>
+
+<th>Noisy</th>
+
+<th>SGMSE+ [1]</th>
+
+<th>Conv-TasNet [2]</th>
+
+<th>RemixIT [3]</th>
+
+<th>RVAE [4]</th>
+
+<th>UDiffSE [5]</th>
+
+<th>UDiffSE+ [6]</th>
+
+<th>DEPSE-IL [7]</th>
+
+<th>DEPSE-TL [7]</th>
+
+<th>DiffUSEEN</th>
+
+<th>ParaDiffUSE-IN</th>
+
+<th>ParaDiffUSE-EN</th>
+
+</tr>
+</thead>
+
+<tbody>
+    <tr>
+    <td>p232_279_bus_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_279_bus_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_234_psquare_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_234_psquare_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_291_cafe_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_291_cafe_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_378_office_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_378_office_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_074_living_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_074_living_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_085_bus_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_085_bus_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_175_living_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_175_living_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_106_bus_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_106_bus_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_154_cafe_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_154_cafe_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_214_living_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_214_living_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_072_cafe_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_072_cafe_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_087_bus_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_087_bus_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_103_psquare_7.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_103_psquare_7.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_312_office_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_312_office_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p232_211_psquare_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p232_211_psquare_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+    <tr>
+    <td>p257_058_office_2.5</td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/clean.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/noisy.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/SGMSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/Conv-TasNet.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/RemixIT.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/RVAE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/UDiffSE.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/UDiffSE+.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/DEPSE-IL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/DEPSE-TL.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/DiffUSEEN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/ParaDiffUSE-IN.wav"> </button> </td>
+    <td> <button class="audio-btn play" data-audio="./demo_webpage/demo_samples/mismatched_vbdmd/p257_058_office_2.5/ParaDiffUSE-EN.wav"> </button> </td>
+    </tr>
+</tbody>
+
+</table>
+
+</div>
+
+<br>
+
+<div style="padding-left: 15px; padding-right: 15px;">
+
+<h3>References</h3>
+
+<p>[1] J. Richter, S. Welker, J.-M. Lemercier, B. Lay, and T. Gerkmann, “Speech
+enhancement and dereverberation with diffusion-based generative models,”
+IEEE/ACM Transactions on Audio, Speech, and Language Processing, 2023.</p>
+
+
+<p>[2] Y. Luo and N. Mesgarani, “Conv-TasNet: Surpassing ideal time–frequency
+    magnitude masking for speech separation,” IEEE/ACM transactions on audio,
+    speech, and language processing, vol. 27, no. 8, pp. 1256–1266, 2019.</p>
+
+
+<p>[3] E. Tzinis, Y. Adi, V. K. Ithapu, B. Xu, P. Smaragdis, and A. Kumar,
+    “RemixIT: Continual self-training of speech enhancement models via boot-
+    strapped remixing,” IEEE Journal of Selected Topics in Signal Processing,
+    vol. 16, no. 6, pp. 1329–1341, 2022.</p>
+
+
+<p>[4] X. Bie, S. Leglaive, X. Alameda-Pineda, and L. Girin, “Unsupervised
+    speech enhancement using dynamical variational autoencoders,” IEEE/ACM
+    Transactions on Audio, Speech, and Language Processing, vol. 30, pp. 2993–
+    3007, 2022.</p>
+
+
+<p>[5] B. Nortier, M. Sadeghi, and R. Serizel, “Unsupervised speech enhancement
+    with diffusion-based generative models,” in IEEE International Conference
+    on Acoustics, Speech and Signal Processing (ICASSP), 2024.</p>
+
+
+<p>[6] J.-E. Ayilo, M. Sadeghi, R. Serizel, and X. Alameda-Pineda, “Diffusion-
+    based unsupervised audio-visual speech enhancement,” in IEEE International
+    Conference on Acoustics, Speech and Signal Processing (ICASSP), 2025.</p>
+
+
+<p>[7] M. Sadeghi, J.-E. Ayilo, R. Serizel, and X. Alameda-Pineda, “Posterior
+    transition modeling for unsupervised diffusion-based speech enhancement,”
+    IEEE Signal Processing Letters, 2025.</p>
+
+</div>
+
+<script>
+    const buttons = document.querySelectorAll(".audio-btn");
+  
+    let currentAudio = null;
+    let currentButton = null;
+  
+    buttons.forEach(button => {
+  
+      const audio = new Audio(button.dataset.audio);
+  
+      button.addEventListener("click", async () => {
+  
+        // SAME BUTTON → TOGGLE PAUSE
+        if (currentAudio === audio) {
+  
+          if (!audio.paused) {
+            audio.pause();
+  
+            button.classList.remove("pause");
+            button.classList.add("play");
+  
+          } else {
+            audio.play();
+  
+            button.classList.remove("play");
+            button.classList.add("pause");
+          }
+  
+          return;
+        }
+  
+        // STOP PREVIOUS AUDIO
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+  
+          currentButton.classList.remove("pause");
+          currentButton.classList.remove("loading");
+          currentButton.classList.add("play");
+        }
+  
+        currentAudio = audio;
+        currentButton = button;
+  
+        // SHOW LOADING
+        button.classList.remove("play");
+        button.classList.add("loading");
+  
+        // WAIT FOR AUDIO TO LOAD
+        audio.load();
+  
+        audio.oncanplaythrough = async () => {
+  
+          button.classList.remove("loading");
+          button.classList.add("pause");
+  
+          await audio.play();
+        };
+  
+        // RESET WHEN FINISHED
+        audio.onended = () => {
+  
+          button.classList.remove("pause");
+          button.classList.add("play");
+  
+          currentAudio = null;
+          currentButton = null;
+        };
+      });
+    });
+  </script>
+
+
+</body>
+</html>

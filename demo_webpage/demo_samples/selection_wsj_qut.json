@@ -1,0 +1,162 @@
+{
+  "440c020t": {
+    "p_id": "440",
+    "utt_name": "440c020t",
+    "noisy_wav": "{noisy_root}/440c020t_CAFE-CAFE-2_-5.wav",
+    "clean_wav": "{clean_root}/440/440c020t.wav",
+    "length": 4.868375,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 24783615,
+    "snr": -5
+  },
+  "441c020h": {
+    "p_id": "441",
+    "utt_name": "441c020h",
+    "noisy_wav": "{noisy_root}/441c020h_CAFE-CAFE-2_-5.wav",
+    "clean_wav": "{clean_root}/441/441c020h.wav",
+    "length": 6.835125,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 15188900,
+    "snr": -5
+  },
+  "446o030t": {
+    "p_id": "446",
+    "utt_name": "446o030t",
+    "noisy_wav": "{noisy_root}/446o030t_CAFE-CAFE-2_0.wav",
+    "clean_wav": "{clean_root}/446/446o030t.wav",
+    "length": 10.0385625,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 22784014,
+    "snr": 0
+  },
+  "447c020v": {
+    "p_id": "447",
+    "utt_name": "447c020v",
+    "noisy_wav": "{noisy_root}/447c020v_CAFE-CAFE-2_0.wav",
+    "clean_wav": "{clean_root}/447/447c020v.wav",
+    "length": 8.3199375,
+    "noise_type": "CAFE-CAFE-2",
+    "noise_start": 10910079,
+    "snr": 0
+  },
+  "440c0207": {
+    "p_id": "440",
+    "utt_name": "440c0207",
+    "noisy_wav": "{noisy_root}/440c0207_CAR-WINUPB-2_-5.wav",
+    "clean_wav": "{clean_root}/440/440c0207.wav",
+    "length": 8.9925625,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 9424535,
+    "snr": -5
+  },
+  "440o030j": {
+    "p_id": "440",
+    "utt_name": "440o030j",
+    "noisy_wav": "{noisy_root}/440o030j_CAR-WINUPB-2_-5.wav",
+    "clean_wav": "{clean_root}/440/440o030j.wav",
+    "length": 6.0365,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 14103128,
+    "snr": -5
+  },
+  "442o030q": {
+    "p_id": "442",
+    "utt_name": "442o030q",
+    "noisy_wav": "{noisy_root}/442o030q_CAR-WINUPB-2_0.wav",
+    "clean_wav": "{clean_root}/442/442o030q.wav",
+    "length": 10.8161875,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 31912229,
+    "snr": 0
+  },
+  "447c020r": {
+    "p_id": "447",
+    "utt_name": "447c020r",
+    "noisy_wav": "{noisy_root}/447c020r_CAR-WINUPB-2_0.wav",
+    "clean_wav": "{clean_root}/447/447c020r.wav",
+    "length": 5.337375,
+    "noise_type": "CAR-WINUPB-2",
+    "noise_start": 34203104,
+    "snr": 0
+  },
+  "443c020l": {
+    "p_id": "443",
+    "utt_name": "443c020l",
+    "noisy_wav": "{noisy_root}/443c020l_HOME-LIVINGB-2_-5.wav",
+    "clean_wav": "{clean_root}/443/443c020l.wav",
+    "length": 6.99025,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 3515587,
+    "snr": -5
+  },
+  "447o0303": {
+    "p_id": "447",
+    "utt_name": "447o0303",
+    "noisy_wav": "{noisy_root}/447o0303_HOME-LIVINGB-2_-5.wav",
+    "clean_wav": "{clean_root}/447/447o0303.wav",
+    "length": 6.1188125,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 24499660,
+    "snr": -5
+  },
+  "447c020z": {
+    "p_id": "447",
+    "utt_name": "447c020z",
+    "noisy_wav": "{noisy_root}/447c020z_HOME-LIVINGB-2_0.wav",
+    "clean_wav": "{clean_root}/447/447c020z.wav",
+    "length": 6.18925,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 33453623,
+    "snr": 0
+  },
+  "445o030d": {
+    "p_id": "445",
+    "utt_name": "445o030d",
+    "noisy_wav": "{noisy_root}/445o030d_HOME-LIVINGB-2_0.wav",
+    "clean_wav": "{clean_root}/445/445o030d.wav",
+    "length": 14.0536875,
+    "noise_type": "HOME-LIVINGB-2",
+    "noise_start": 7483612,
+    "snr": 0
+  },
+  "440c020a": {
+    "p_id": "440",
+    "utt_name": "440c020a",
+    "noisy_wav": "{noisy_root}/440c020a_STREET-KG-2_-5.wav",
+    "clean_wav": "{clean_root}/440/440c020a.wav",
+    "length": 8.6614375,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 42464210,
+    "snr": -5
+  },
+  "440o030a": {
+    "p_id": "440",
+    "utt_name": "440o030a",
+    "noisy_wav": "{noisy_root}/440o030a_STREET-KG-2_-5.wav",
+    "clean_wav": "{clean_root}/440/440o030a.wav",
+    "length": 9.759125,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 28208336,
+    "snr": -5
+  },
+  "442o030d": {
+    "p_id": "442",
+    "utt_name": "442o030d",
+    "noisy_wav": "{noisy_root}/442o030d_STREET-KG-2_0.wav",
+    "clean_wav": "{clean_root}/442/442o030d.wav",
+    "length": 6.7145,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 8416493,
+    "snr": 0
+  },
+  "447c020a": {
+    "p_id": "447",
+    "utt_name": "447c020a",
+    "noisy_wav": "{noisy_root}/447c020a_STREET-KG-2_0.wav",
+    "clean_wav": "{clean_root}/447/447c020a.wav",
+    "length": 4.637125,
+    "noise_type": "STREET-KG-2",
+    "noise_start": 16568259,
+    "snr": 0
+  }
+}
