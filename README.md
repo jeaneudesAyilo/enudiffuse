@@ -12,7 +12,7 @@ Please, find bellow the supplementary materials associated to the first mentionn
 
 
 ## Demo with listening audio samples
-(Ongoing)
+[Demo page](https://jeaneudesayilo.github.io/enudiffuse/)
 
 
 ## Environment setup
