@@ -126,8 +126,8 @@ bash launch_SE_ALL.sh
 ```
 
 - Compute metrics (optionally)
-Metrics are computed directly after performing the speech enhancement on the test set. We can compute them if needed by following:
-(being in the parent folder `enudiffuse`), run:
+
+Metrics are computed directly after running the speech enhancement on the test set as indicated above. We can compute them separately if needed by running (being in the parent folder `enudiffuse`):
 
 <!-- ```bash
 bash ./eval/statistics/run_metrics.sh
