@@ -188,16 +188,20 @@ def speech_enhance(params):
 
         if len([x[:-4] for x in os.listdir(saving) if x.endswith(".wav")]) == len(dataset):
 
-            if params["dataset"] in ["WSJ0"]:               
-                output = subprocess.Popen(f'python eval/statistics/compute_metrics.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]} --dnn_mos', shell=True)
-                stdout, stderr = output.communicate() 
+            # if params["dataset"] in ["WSJ0"]:               
+            #     output = subprocess.Popen(f'python eval/statistics/compute_metrics.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]} --dnn_mos', shell=True)
+            #     stdout, stderr = output.communicate() 
 
-            else:
-                output = subprocess.Popen(f'python eval/statistics/compute_metrics.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]}', shell=True)
-                stdout, stderr = output.communicate() 
+            # else:
+            #     output = subprocess.Popen(f'python eval/statistics/compute_metrics.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]}', shell=True)
+            #     stdout, stderr = output.communicate() 
 
-                output2 = subprocess.Popen(f'python eval/statistics/compute_metrics_add_vb_dnnmos.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]} --dnn_mos', shell=True)
-                stdout2, stderr2 = output2.communicate() 
+            #     output2 = subprocess.Popen(f'python eval/statistics/compute_metrics_add_vb_dnnmos.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]} --dnn_mos', shell=True)
+            #     stdout2, stderr2 = output2.communicate() 
+
+            output = subprocess.Popen(f'python ./eval/statistics/DNS-Challenge/DNSMOS/dnsmos_local_general.py --testset_dir {saving} --data_list {params["data_dir"]} --dataset  {params["dataset"]}', shell=True)
+            stdout, stderr = output.communicate() 
+
 
 
     elif params["dataset"] in ["TCD-TIMIT","TCD-DEMAND", "LRS3-DEMAND", "LRS3-NTCD", "EARS-TAU","LIBRI-FSD50K"]:
@@ -339,16 +343,19 @@ def speech_enhance(params):
         saving = params["save_dir_speech"] if enhance.verbose else params["save_dir"]
         if len([x[:-4] for x in os.listdir(saving) if x.endswith(".wav")]) == len(dataset):
 
-            if "TCD" in params["dataset"] and "LRS3" not in params["dataset"]:
-                output = subprocess.Popen(f'python eval/statistics/compute_metrics.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]} --dnn_mos', shell=True)
+            # if "TCD" in params["dataset"] and "LRS3" not in params["dataset"]:
+            #     output = subprocess.Popen(f'python eval/statistics/compute_metrics.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]} --dnn_mos', shell=True)
 
-            elif "LRS3" in params["dataset"] :
-                output = subprocess.Popen(f'python eval/statistics/compute_metrics.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]}', shell=True)
+            # elif "LRS3" in params["dataset"] :
+            #     output = subprocess.Popen(f'python eval/statistics/compute_metrics.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]}', shell=True)
             
-            if "EARS" in params["dataset"] :
-                output = subprocess.Popen(f'python eval/statistics/compute_metrics.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]} --dnn_mos', shell=True)
+            # if "EARS" in params["dataset"] :
+            #     output = subprocess.Popen(f'python eval/statistics/compute_metrics.py  --enhanced_dir {saving}  --data_dir {params["data_dir"]} --save_dir {saving}  --dataset  {params["dataset"]} --dnn_mos', shell=True)
                     
-        stdout, stderr = output.communicate() 
+            # stdout, stderr = output.communicate() 
+
+            output = subprocess.Popen(f'python ./eval/statistics/DNS-Challenge/DNSMOS/dnsmos_local_general.py --testset_dir {saving} --data_list {params["data_dir"]} --dataset  {params["dataset"]}', shell=True)
+            stdout, stderr = output.communicate() 
 
 
                 

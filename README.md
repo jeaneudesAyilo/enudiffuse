@@ -126,12 +126,18 @@ bash launch_SE_ALL.sh
 ```
 
 - Compute metrics (optionally)
+Metrics are computed directly after performing the speech enhancement on the test set. We can compute them if needed by following:
 (being in the parent folder `enudiffuse`), run:
-```bash
+
+<!-- ```bash
 bash ./eval/statistics/run_metrics.sh
+``` --->
+
+```bash
+bash ./eval/statistics/DNS-Challenge/DNSMOS/new_metrics_particular.sh
 ```
 
-*Note that you would need to insert the parts to your data in some of the files involved in the evaluation and metrics computation.*
+*Note that you would need to insert the paths to your data in some of the files involved in the evaluation and metrics computation.*
 
 ## Demo for quick usage
 We show in this [demo notebook](./demo.ipynb) a quick way to use the provided checkpoints and run the different algorithms.

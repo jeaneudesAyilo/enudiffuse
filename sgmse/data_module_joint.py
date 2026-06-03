@@ -31,7 +31,7 @@ def load_dict(filename_):
 
 def getTIMITclean(
     subset,
-    data_dir="/srv/storage/talc@storage4.nancy.grid5000.fr/multispeech/corpus/audio_visual/TCD-TIMIT/",
+    data_dir="/group_storage /audio_visual/TCD-TIMIT/",
     t="_data_NTCD",
 ):
     if subset == "valid":
@@ -52,7 +52,7 @@ def getTIMITclean(
 
 def getTIMITnoisy(
     subset,
-    data_dir="/srv/storage/talc@storage4.nancy.grid5000.fr/multispeech/corpus/audio_visual/NTCD-TIMIT-noisy/",
+    data_dir="/group_storage /audio_visual/NTCD-TIMIT-noisy/",
     t="Babble/15/volunteers",
 ):
     if subset == "train":
@@ -206,7 +206,7 @@ class SpecsJoint(Dataset):
 
 
         elif format == "wsj0":
-            data_dir = "/srv/storage/talc@storage4.nancy.grid5000.fr/multispeech/corpus/speech_recognition/wsj0_wav"
+            data_dir = "/group_storage /speech_recognition/wsj0_wav"
             dic = {
                 "train": "**/si_tr_s/**/*.wav",
                 "valid": "**/si_dt_05/**/*.wav",
@@ -216,7 +216,7 @@ class SpecsJoint(Dataset):
             self.clean_files = sorted(glob(data_dir + dic[subset], recursive=True))
 
             
-            noisy_dir = "/srv/storage/talc@storage4.nancy.grid5000.fr/multispeech/corpus/source_separation/QUT_WSJ0"
+            noisy_dir = "/group_storage /source_separation/QUT_WSJ0"
 
             dic_noisy = {
                     "train":  join(noisy_dir,"train"),
@@ -290,6 +290,123 @@ class SpecsJoint(Dataset):
             self.labels = [self.labels[i] for i in shuffle_index]
 
 
+        elif format == "demand_wsj":
+            
+            print("######### WE ARE HERE ############")
+            wsjqut_data_dir = "/group_storage /speech_recognition/wsj0_wav"
+            dic = {
+                "train": "**/si_tr_s/**/*.wav",
+                "valid": "**/si_dt_05/**/*.wav",
+                "test": "**/si_et_05/**/*.wav",
+            }                        
+
+            self.clean_files = sorted(glob(wsjqut_data_dir + dic[subset], recursive=True))
+
+            vbdmd_data_dir = "/group_storage /source_separation/VoiceBankDEMAND/train_valid_16k"
+
+            vbdmd_clean_files = find_files(join(vbdmd_data_dir, subset,"clean"), ext="wav")
+            vbdmd_noisy_files = find_files(join(vbdmd_data_dir, subset,"noisy"), ext="wav")            
+
+            assert audio_only==True , print(f"If format == 'wsj0' video is not available")
+
+            self.noise_files = list(zip(vbdmd_noisy_files, vbdmd_clean_files)) ## we will do the substraction
+
+            r = len(self.clean_files)/len(self.noise_files)
+
+            if r>1: # there are more clean speech data than noise data, adjust
+                print("######we are in this case A ########")
+
+                self.noise_files *= (int(r)+1)
+
+                self.noise_files = self.noise_files[:len(self.clean_files)]
+            
+            elif r<1:
+
+                self.clean_files *= (int(1/r)+1)
+
+                self.clean_files = self.clean_files[:len(self.noise_files)]
+
+            else:
+                print(f"######we are in this {r} #######")
+                print(f"###### noise_files {len(self.noise_files)} #######")
+                print(f"###### clean_files {len(self.clean_files)} #######")
+            
+
+            self.myfiles = self.clean_files + self.noise_files 
+
+            self.labels = [1]*len(self.clean_files) + [0]*len(self.noise_files) 
+
+            shuffle_index = list(range(len(self.myfiles))) 
+
+            random.shuffle(shuffle_index) ##although the traindata loader will do a schuffle itself, we do an initial schufle before 
+
+            self.myfiles = [self.myfiles[i] for i in shuffle_index]
+
+            self.labels = [self.labels[i] for i in shuffle_index]
+
+
+
+        elif format == "qut_vb":
+
+            vbdmd_data_dir = "/group_storage /source_separation/VoiceBankDEMAND/train_valid_16k"
+
+            self.clean_files = find_files(join(vbdmd_data_dir, subset,"clean"), ext="wav")
+
+            wsjqut_data_dir = "/group_storage /speech_recognition/wsj0_wav"
+            dic = {
+                "train": "**/si_tr_s/**/*.wav",
+                "valid": "**/si_dt_05/**/*.wav",
+                "test": "**/si_et_05/**/*.wav",
+            }                        
+
+            wsjqut_clean_files = sorted(glob(wsjqut_data_dir + dic[subset], recursive=True))
+
+            wsjqut_noisy_dir = "/group_storage /source_separation/QUT_WSJ0"
+
+            dic_noisy = {
+                    "train":  join(wsjqut_noisy_dir,"train"),
+                    "valid": join(wsjqut_noisy_dir,"val"),
+                    "test": join(wsjqut_noisy_dir,"test"),
+            }                             
+            wsjqut_noisy_files = sorted(find_files(dic_noisy[subset], ext='wav')) 
+
+
+            assert audio_only==True , print(f"If format == 'wsj0' video is not available")
+
+
+            self.noise_files = list(zip(wsjqut_noisy_files, wsjqut_clean_files)) ## we will do the substraction
+
+
+            r = len(self.clean_files)/len(self.noise_files)
+
+
+            if r>1: # there are more clean speech data than noise data, adjust
+                print("######## case A ######")
+
+                self.noise_files *= (int(r)+1)
+
+                self.noise_files = self.noise_files[:len(self.clean_files)]
+            
+            elif r<1:
+                print("######## case B ######")
+                self.clean_files *= (int(1/r)+1)
+
+                self.clean_files = self.clean_files[:len(self.noise_files)]
+
+            
+            self.myfiles = self.clean_files + self.noise_files 
+
+            self.labels = [1]*len(self.clean_files) + [0]*len(self.noise_files) 
+
+            shuffle_index = list(range(len(self.myfiles))) 
+
+            random.shuffle(shuffle_index) ##although the traindata loader will do a schuffle itself, we do an initial schufle before 
+
+            self.myfiles = [self.myfiles[i] for i in shuffle_index]
+
+            self.labels = [self.labels[i] for i in shuffle_index]
+           
+                      
         else:
             # Feel free to add your own directory format
             raise NotImplementedError(f"Directory format {format} unknown!")
@@ -307,6 +424,8 @@ class SpecsJoint(Dataset):
         self.impose_batch_1 = impose_batch_1
         self.noise_modelling = noise_modelling
 
+        print(f"###### len(self.myfiles) {len(self.myfiles)} #######")
+
         assert all(
             k in stft_kwargs.keys() for k in ["n_fft", "hop_length", "center", "window"]
         ), "misconfigured STFT kwargs"
@@ -323,7 +442,7 @@ class SpecsJoint(Dataset):
         if self.vfeat_processing_order == "default": 
             assert self.audio_only==True , print(f"If self.vfeat_processing_order == 'default' video is not available")
             
-            if self.format in ["tcd-timit", "wsj0", "vb", "wsj0_reduced"]: #we  need the clean speech file to get the noise (substract the clean from noisy)                
+            if self.format in ["tcd-timit", "wsj0", "vb", "wsj0_reduced", "demand_wsj", "qut_vb"]: #we  need the clean speech file to get the noise (substract the clean from noisy)                
                 
                 if isinstance(self.myfiles[i],str): # clean speech
                     
@@ -339,10 +458,10 @@ class SpecsJoint(Dataset):
                     if self.format=="tcd-timit":
                         assert os.path.basename(self.myfiles[i][1])==os.path.basename(self.myfiles[i][0])
 
-                    elif self.format=="vb":
+                    elif self.format in ["vb","demand_wsj"]: # demand noise
                         assert self.myfiles[i][1].split("/")[-1] == self.myfiles[i][0].split("/")[-1]
                     
-                    elif self.format in ["wsj0_reduced","wsj0"]:
+                    elif self.format in ["wsj0_reduced","wsj0", "qut_vb"]:
                         assert os.path.basename(self.myfiles[i][1]).split('.')[0] == os.path.basename(self.myfiles[i][0]).split('_')[0]
                     
                     ### we proceed like this to enable the paradiffuse models to be trained on the same amount of data as the supervised models which input the clean speech x and the noisy speech y
@@ -422,7 +541,7 @@ class SpecsDataModuleJoint(pl.LightningDataModule):
         parser.add_argument(
             "--format",
             type=str,
-            choices=("tcd-timit", "dns", "wsj0", "wsj0_reduced", "vb", "ears-tau","reduced-ears-tau"),
+            choices=("tcd-timit", "dns", "wsj0", "wsj0_reduced", "vb", "ears-tau","reduced-ears-tau", "qut_vb", "demand_wsj"),
             required=True,
             help="Read file paths according to file naming format.",
         )
